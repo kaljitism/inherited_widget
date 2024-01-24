@@ -16,4 +16,8 @@ class APIProvider extends InheritedWidget {
   bool updateShouldNotify(covariant APIProvider oldWidget) {
     return uuid != oldWidget.uuid;
   }
+
+  static APIProvider of(BuildContext context) {
+    return context.dependOnInheritedWidgetOfExactType<APIProvider>()!;
+  }
 }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:inherited_widget/api_provider.dart';
+import 'package:inherited_widget/datetime_widget.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -9,22 +11,26 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   String title = 'Tap the Screen';
+  ValueKey _key = const ValueKey<String?>(null);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(title),
+        title: Text(APIProvider.of(context).api.dateAndTime ?? ""),
         centerTitle: true,
       ),
       body: GestureDetector(
-        onTap: () {
-          setState(() {
-            title = DateTime.now().toIso8601String();
-          });
-        },
-        child: Container(),
-      ),
+          onTap: () async {
+            final api = APIProvider.of(context).api;
+            final timeAndDate = await api.getDateAndTime();
+            setState(() {
+              _key = ValueKey(timeAndDate);
+            });
+          },
+          child: Center(
+            child: DateTimeWidget(key: _key),
+          )),
     );
   }
 }

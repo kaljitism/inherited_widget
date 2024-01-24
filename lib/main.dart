@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:inherited_widget/api.dart';
+import 'package:inherited_widget/api_provider.dart';
 import 'package:inherited_widget/home_page.dart';
 
 void main() {
@@ -12,7 +14,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData.dark(),
-      home: const HomePage(),
+      home: APIProvider(
+        api: API(),
+        child: const HomePage(),
+      ),
     );
   }
 }
